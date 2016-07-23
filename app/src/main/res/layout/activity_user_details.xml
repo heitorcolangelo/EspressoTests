@@ -1,63 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <LinearLayout
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/default_margin"
+      android:gravity="center_horizontal"
+      android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/user_details_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/cd_user_details_image"
+        android:minHeight="110dp"
+        android:minWidth="110dp"
+        tools:background="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/user_details_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:textSize="22sp"
+        tools:text="Joao da Silva" />
+
+    <com.example.heitorcolangelo.espressotests.ui.widget.ImageAndTextView
+        android:id="@+id/user_details_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:contentDescription="@string/cd_user_details_phone" />
 
-        <ImageView
-            android:id="@+id/user_details_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/cd_user_details_image"
-            android:minHeight="110dp"
-            android:minWidth="110dp"
-            tools:background="@color/colorAccent" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray" />
 
-        <TextView
-            android:id="@+id/user_details_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:textSize="22sp"
-            tools:text="Joao da Silva" />
+    <com.example.heitorcolangelo.espressotests.ui.widget.ImageAndTextView
+        android:id="@+id/user_details_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:contentDescription="@string/cd_user_details_email" />
 
-        <com.example.heitorcolangelo.espressotests.ui.widget.ImageAndTextView
-            android:id="@+id/user_details_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:contentDescription="@string/cd_user_details_phone" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@android:color/darker_gray" />
-
-        <com.example.heitorcolangelo.espressotests.ui.widget.ImageAndTextView
-            android:id="@+id/user_details_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:contentDescription="@string/cd_user_details_email" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@android:color/darker_gray" />
-
-        <com.example.heitorcolangelo.espressotests.ui.widget.ImageAndTextView
-            android:id="@+id/user_details_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:contentDescription="@string/cd_user_details_address" />
-    </LinearLayout>
+    <com.example.heitorcolangelo.espressotests.ui.widget.ImageAndTextView
+        android:id="@+id/user_details_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:contentDescription="@string/cd_user_details_address" />
+  </LinearLayout>
 </ScrollView>

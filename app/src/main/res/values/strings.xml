@@ -1,16 +1,16 @@
 <resources>
-    <string name="app_name">BFacil</string>
+  <string name="app_name">Espresso Tests</string>
 
-    <!-- User details -->
-    <string name="user_details_phone">Phone</string>
-    <string name="user_details_email">E-mail</string>
+  <!-- User details -->
+  <string name="user_details_phone">Phone</string>
+  <string name="user_details_email">E-mail</string>
 
-    <!-- Content descriptions -->
-    <string name="cd_user_details_image">Fotografia do usuário clicado</string>
-    <string name="cd_user_details_phone">Ligar para usuário</string>
-    <string name="cd_user_details_email">Enviar email para usuário</string>
-    <string name="cd_user_details_address">Traçar rota até endereço do usuário</string>
-    <string name="employees_list">Lista de funcionários</string>
-    <string name="employee_details">Detalhes do funcionário</string>
-    <string name="loading">Carregando...</string>
+  <!-- Content descriptions -->
+  <string name="cd_user_details_image">User photograph</string>
+  <string name="cd_user_details_phone">Call user</string>
+  <string name="cd_user_details_email">Email user</string>
+  <string name="cd_user_details_address">Route to user location</string>
+  <string name="employees_list">List of users</string>
+  <string name="employee_details">User details</string>
+  <string name="loading">Loading…</string>
 </resources>

@@ -9,33 +9,33 @@ import java.util.List;
 
 public class UserListAdapter extends BaseAdapter {
 
-    private final List<UserVO> userList;
+  private final List<UserVO> userList;
 
-    public UserListAdapter(List<UserVO> userList) {
-        this.userList = userList;
-    }
+  public UserListAdapter(List<UserVO> userList) {
+    this.userList = userList;
+  }
 
-    @Override
-    public int getCount() {
-        return userList.size();
-    }
+  @Override
+  public int getCount() {
+    return userList.size();
+  }
 
-    @Override
-    public Object getItem(int position) {
-        return userList.get(position);
-    }
+  @Override
+  public Object getItem(int position) {
+    return userList.get(position);
+  }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+  @Override
+  public long getItemId(int position) {
+    return position;
+  }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        return new UserItemView(parent.getContext(),userList.get(position));
-    }
+  @Override
+  public View getView(int position, View convertView, ViewGroup parent) {
+    return new UserItemView(parent.getContext(), userList.get(position));
+  }
 
-    public UserVO getUserAtPosition(int position) {
-        return (UserVO) getItem(position);
-    }
+  public UserVO getUserAtPosition(int position) {
+    return (UserVO) getItem(position);
+  }
 }

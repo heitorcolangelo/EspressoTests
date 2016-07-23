@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:gravity="center_vertical"
+       android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/image_and_text_image"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_margin="@dimen/default_margin"
-        android:contentDescription="@null"
-        tools:src="@drawable/ic_phone" />
+  <ImageView
+      android:id="@+id/image_and_text_image"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:layout_margin="@dimen/default_margin"
+      android:contentDescription="@null"
+      tools:src="@drawable/ic_phone" />
 
-    <TextView
-        android:id="@+id/image_and_text_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:textSize="18sp"
-        tools:text="(11) 9 9959-1993" />
+  <TextView
+      android:id="@+id/image_and_text_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/default_margin"
+      android:textSize="18sp"
+      tools:text="(11) 9 9959-1993" />
 
 </merge>

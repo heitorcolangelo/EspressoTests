@@ -65,7 +65,7 @@ dependencies {
   // Espresso
   androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
   androidTestCompile "com.android.support.test:runner:0.5"
-  
+
   androidTestCompile "com.android.support:support-annotations:$androidSupportVersion"
 
   testCompile 'junit:junit:4.12'
