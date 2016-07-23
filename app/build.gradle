@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+
+android {
+  compileSdkVersion 23
+  buildToolsVersion "24.0.0"
+
+  defaultConfig {
+    applicationId "com.example.heitorcolangelo.espressotests"
+    minSdkVersion 16
+    targetSdkVersion 23
+    versionCode 1
+    versionName "1.0"
+
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  def baseUrl = '"http://api.randomuser.me/"'
+
+  buildTypes {
+    debug {
+      minifyEnabled false
+      buildConfigField 'String', 'BASE_URL', baseUrl
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+}
+
+final butterKnifeVersion = '8.1.0'
+final espressoVersion = '2.2.2'
+final picassoVersion = '2.5.2'
+final okHttpVersion = '3.3.1'
+final androidSupportVersion = '23.3.0'
+final retrofitVersion = '2.0.2'
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+
+  compile "com.android.support:support-annotations:$androidSupportVersion"
+  compile "com.android.support:support-v4:$androidSupportVersion"
+  compile "com.android.support:appcompat-v7:$androidSupportVersion"
+  compile "com.android.support:design:$androidSupportVersion"
+  compile "com.android.support:recyclerview-v7:$androidSupportVersion"
+
+  // ButterKnife
+  apt "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
+  compile "com.jakewharton:butterknife:$butterKnifeVersion"
+
+  // Picasso
+  compile "com.squareup.picasso:picasso:$picassoVersion"
+
+  // EventBus
+  compile 'org.greenrobot:eventbus:3.0.0'
+
+  // OkHttp
+  compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
+  compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+
+  // Retrofit
+  compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+  compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+  // MockWebServer
+  androidTestCompile "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
+
+  // Espresso
+  androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
+  androidTestCompile "com.android.support.test:runner:0.5"
+  
+  androidTestCompile "com.android.support:support-annotations:$androidSupportVersion"
+
+  testCompile 'junit:junit:4.12'
+}

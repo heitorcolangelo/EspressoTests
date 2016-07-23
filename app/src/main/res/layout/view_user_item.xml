@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="120dp"
+    android:layout_height="120dp"
+    tools:background="@color/colorAccent">
+
+    <ImageView
+        android:id="@+id/user_view_image"
+        android:layout_width="120dp"
+        android:layout_height="120dp" />
+
+    <LinearLayout
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/blackWithAlpha"
+        android:orientation="vertical"
+        android:padding="3dp">
+
+        <TextView
+            android:id="@+id/user_view_name"
+            style="@style/BFacil.Widget.TextView.ListItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Joao Paulo" />
+
+        <TextView
+            android:id="@+id/user_view_phone"
+            style="@style/BFacil.Widget.TextView.ListItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="(107)-396-0688" />
+
+    </LinearLayout>
+
+</merge>
