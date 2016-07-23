@@ -30,6 +30,7 @@ final picassoVersion = '2.5.2'
 final okHttpVersion = '3.3.1'
 final androidSupportVersion = '23.3.0'
 final retrofitVersion = '2.0.2'
+final espressoVersion = '2.2.2'
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -57,6 +58,15 @@ dependencies {
   // Retrofit
   compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
   compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+  // MockWebServer
+  androidTestCompile "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
+
+  // Espresso
+  androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
+  androidTestCompile "com.android.support.test:runner:0.5"
+
+  androidTestCompile "com.android.support:support-annotations:$androidSupportVersion"
 
   testCompile 'junit:junit:4.12'
 }
