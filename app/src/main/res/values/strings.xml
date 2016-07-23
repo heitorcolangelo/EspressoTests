@@ -13,4 +13,12 @@
   <string name="employees_list">List of users</string>
   <string name="employee_details">User details</string>
   <string name="loading">Loading…</string>
+  <string name="login_password">Type your password</string>
+  <string name="login_username">Type your username</string>
+  <string name="cd_login_image">Android image</string>
+  <string name="login_button_text">Login</string>
+  <string name="not_empty_field">This field can\'t be empty</string>
+  <string name="important">Important</string>
+  <string name="validation_message">Fields cannot be empty</string>
+  <string name="ok">Ok</string>
 </resources>

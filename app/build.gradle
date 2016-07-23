@@ -26,7 +26,6 @@ android {
 }
 
 final butterKnifeVersion = '8.1.0'
-final espressoVersion = '2.2.2'
 final picassoVersion = '2.5.2'
 final okHttpVersion = '3.3.1'
 final androidSupportVersion = '23.3.0'
@@ -41,12 +40,12 @@ dependencies {
   compile "com.android.support:design:$androidSupportVersion"
   compile "com.android.support:recyclerview-v7:$androidSupportVersion"
 
+  // Picasso
+  compile "com.squareup.picasso:picasso:$picassoVersion"
+
   // ButterKnife
   apt "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
   compile "com.jakewharton:butterknife:$butterKnifeVersion"
-
-  // Picasso
-  compile "com.squareup.picasso:picasso:$picassoVersion"
 
   // EventBus
   compile 'org.greenrobot:eventbus:3.0.0'
@@ -58,15 +57,6 @@ dependencies {
   // Retrofit
   compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
   compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-
-  // MockWebServer
-  androidTestCompile "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
-
-  // Espresso
-  androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
-  androidTestCompile "com.android.support.test:runner:0.5"
-
-  androidTestCompile "com.android.support:support-annotations:$androidSupportVersion"
 
   testCompile 'junit:junit:4.12'
 }
