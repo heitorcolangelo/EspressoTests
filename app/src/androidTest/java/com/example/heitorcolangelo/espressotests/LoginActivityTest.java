@@ -41,8 +41,14 @@ public class LoginActivityTest {
     testEmptyFieldState(R.id.login_password);
   }
 
-  private void testEmptyFieldState(int notEmptyFieldId){
-    onView(withId(notEmptyFieldId)).perform(typeText("defaultText"),closeSoftKeyboard());
+  @Test
+  public void whenBothFieldsAreEmpty_andClickOnLoginButton_shouldDisplayDialog() {
+    testEmptyFieldState(-1);
+  }
+
+  private void testEmptyFieldState(int notEmptyFieldId) {
+    if (notEmptyFieldId != -1)
+      onView(withId(notEmptyFieldId)).perform(typeText("defaultText"), closeSoftKeyboard());
     onView(withId(R.id.login_button)).perform(click());
     onView(withText(R.string.validation_message)).check(matches(isDisplayed()));
     onView(withText(R.string.ok)).perform(click());
