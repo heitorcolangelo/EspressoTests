@@ -6,6 +6,7 @@
               android:layout_margin="3dp"
               android:animateLayoutChanges="true"
               android:gravity="center"
+              android:id="@+id/main_activity_container"
               android:orientation="vertical">
 
   <GridView
