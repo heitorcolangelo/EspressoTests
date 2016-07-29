@@ -60,9 +60,6 @@ dependencies {
   compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
   compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
-  // MockWebServer
-  androidTestCompile "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
-
   // Espresso
   androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
   androidTestCompile "com.android.support.test:runner:0.5"
