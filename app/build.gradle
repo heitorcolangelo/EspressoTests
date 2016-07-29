@@ -2,18 +2,22 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
 android {
-  compileSdkVersion 23
+  compileSdkVersion 24
   buildToolsVersion "24.0.0"
 
   defaultConfig {
     applicationId "com.example.heitorcolangelo.espressotests"
     minSdkVersion 16
-    targetSdkVersion 23
+    targetSdkVersion 24
     versionCode 1
     versionName "1.0"
 
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    vectorDrawables.useSupportLibrary = true
+
+    resConfigs "en"
   }
+
   def baseUrl = '"http://api.randomuser.me/"'
 
   buildTypes {
@@ -28,16 +32,13 @@ android {
 final butterKnifeVersion = '8.1.0'
 final picassoVersion = '2.5.2'
 final okHttpVersion = '3.3.1'
-final androidSupportVersion = '23.3.0'
+final androidSupportVersion = '24.1.1'
 final retrofitVersion = '2.0.2'
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
 
-  compile "com.android.support:support-annotations:$androidSupportVersion"
-  compile "com.android.support:support-v4:$androidSupportVersion"
   compile "com.android.support:appcompat-v7:$androidSupportVersion"
-  compile "com.android.support:design:$androidSupportVersion"
   compile "com.android.support:recyclerview-v7:$androidSupportVersion"
 
   // Picasso
