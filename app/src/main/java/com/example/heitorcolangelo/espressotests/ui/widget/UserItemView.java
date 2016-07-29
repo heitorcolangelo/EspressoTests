@@ -3,7 +3,6 @@ package com.example.heitorcolangelo.espressotests.ui.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -11,19 +10,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.heitorcolangelo.espressotests.R;
+import com.example.heitorcolangelo.espressotests.adapter.holder.ViewBinder;
 import com.example.heitorcolangelo.espressotests.network.model.UserVO;
 import com.squareup.picasso.Picasso;
 
-public class UserItemView extends RelativeLayout {
+public class UserItemView extends RelativeLayout implements ViewBinder<UserVO> {
 
   @BindView(R.id.user_view_image) ImageView userImage;
   @BindView(R.id.user_view_name) TextView userName;
-  @BindView(R.id.user_view_phone) TextView userPhone;
-
-  public UserItemView(Context context, UserVO user) {
-    this(context);
-    setUserData(user);
-  }
 
   public UserItemView(Context context) {
     super(context);
@@ -51,12 +45,12 @@ public class UserItemView extends RelativeLayout {
     ButterKnife.bind(this);
   }
 
-  public void setUserData(@NonNull UserVO user) {
-    userName.setText(user.fullName());
-    userPhone.setText(user.phone());
+  @Override
+  public void bind(UserVO payload) {
+    userName.setText(payload.fullName());
 
     Picasso.with(getContext())
-        .load(user.picture().medium())
+        .load(payload.picture().medium())
         .into(userImage);
   }
 }

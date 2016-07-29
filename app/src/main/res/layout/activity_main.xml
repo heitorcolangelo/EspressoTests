@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_margin="3dp"
               android:animateLayoutChanges="true"
-              android:gravity="center"
-              android:id="@+id/main_activity_container"
+              android:gravity="center_horizontal"
               android:orientation="vertical">
 
-  <GridView
-      android:id="@+id/grid_view"
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recycler_view"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:columnWidth="110dp"
-      android:gravity="center"
-      android:horizontalSpacing="10dp"
-      android:numColumns="auto_fit"
-      android:stretchMode="columnWidth"
-      android:verticalSpacing="10dp"
-      tools:visibility="gone" />
+      android:layout_height="wrap_content"
+      android:padding="8dp"/>
 
   <LinearLayout
       android:id="@+id/progress_view"
@@ -31,13 +25,34 @@
       tools:visibility="visible">
 
     <ProgressBar
-        style="@android:style/Widget.DeviceDefault.ProgressBar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.DeviceDefault.ProgressBar" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/loading" />
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/error_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:visibility="gone">
+
+    <ImageView
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        app:srcCompat="@drawable/ic_cancel" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/request_error"
+        android:textSize="20sp"/>
+
   </LinearLayout>
 </LinearLayout>
