@@ -1,41 +1,32 @@
 package com.example.heitorcolangelo.espressotests.adapter;
 
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import com.example.heitorcolangelo.espressotests.adapter.holder.BasicViewHolder;
 import com.example.heitorcolangelo.espressotests.network.model.UserVO;
 import com.example.heitorcolangelo.espressotests.ui.widget.UserItemView;
-import java.util.List;
 
-public class UserListAdapter extends BaseAdapter {
+public class UserListAdapter extends SimpleRecyclerAdapter<UserVO, UserItemView> {
 
-  private final List<UserVO> userList;
+  private OnItemClickListener listener;
 
-  public UserListAdapter(List<UserVO> userList) {
-    this.userList = userList;
+  public UserListAdapter(OnItemClickListener listener) {
+    this.listener = listener;
   }
 
   @Override
-  public int getCount() {
-    return userList.size();
+  public void onBindViewHolder(BasicViewHolder viewHolder, int position) {
+    super.onBindViewHolder(viewHolder, position);
+    final UserVO user = itemList.get(position);
+    ((UserItemView) viewHolder.getBinder()).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        if (listener != null)
+          listener.onItemClick(user);
+      }
+    });
   }
 
-  @Override
-  public Object getItem(int position) {
-    return userList.get(position);
-  }
-
-  @Override
-  public long getItemId(int position) {
-    return position;
-  }
-
-  @Override
-  public View getView(int position, View convertView, ViewGroup parent) {
-    return new UserItemView(parent.getContext(), userList.get(position));
-  }
-
-  public UserVO getUserAtPosition(int position) {
-    return (UserVO) getItem(position);
+  public interface OnItemClickListener {
+    void onItemClick(UserVO item);
   }
 }
