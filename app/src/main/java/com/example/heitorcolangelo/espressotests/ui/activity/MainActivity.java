@@ -14,6 +14,7 @@ import com.example.heitorcolangelo.espressotests.R;
 import com.example.heitorcolangelo.espressotests.adapter.SimpleRecyclerAdapter;
 import com.example.heitorcolangelo.espressotests.adapter.UserListAdapter;
 import com.example.heitorcolangelo.espressotests.network.UsersApi;
+import com.example.heitorcolangelo.espressotests.network.model.ErrorVO;
 import com.example.heitorcolangelo.espressotests.network.model.Page;
 import com.example.heitorcolangelo.espressotests.network.model.UserVO;
 import com.example.heitorcolangelo.espressotests.ui.BaseActivity;
@@ -59,7 +60,7 @@ public class MainActivity extends BaseActivity {
   }
 
   @Override
-  protected boolean handleError(Throwable error) {
+  protected boolean handleError(ErrorVO error) {
     showError();
     return true;
   }
