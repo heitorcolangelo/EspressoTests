@@ -65,6 +65,12 @@ dependencies {
   androidTestCompile "com.android.support.test.espresso:espresso-intents:$espressoVersion"
   androidTestCompile "com.android.support.test:runner:0.5"
 
+  // MockWebServer
+  androidTestCompile "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
+
+  // Mirror
+  androidTestCompile "net.vidageek:mirror:1.6.1"
+
   androidTestCompile "com.android.support:support-annotations:$androidSupportVersion"
 
   testCompile 'junit:junit:4.12'
