@@ -1,6 +1,7 @@
 package com.example.heitorcolangelo.espressotests.network;
 
 import com.example.heitorcolangelo.espressotests.BuildConfig;
+import com.example.heitorcolangelo.espressotests.network.model.ErrorVO;
 import com.example.heitorcolangelo.espressotests.network.model.Page;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -44,12 +45,17 @@ public final class UsersApi {
     userResponsePage.enqueue(new Callback<Page>() {
       @Override
       public void onResponse(Call<Page> call, Response<Page> response) {
-        EventBus.getDefault().post(response.body());
+        if (response.isSuccessful())
+          EventBus.getDefault().post(response.body());
+        else {
+          ErrorVO error = GSON.fromJson(response.errorBody().charStream(), ErrorVO.class);
+          EventBus.getDefault().post(error);
+        }
       }
 
       @Override
       public void onFailure(Call<Page> call, Throwable t) {
-        EventBus.getDefault().post(t);
+        EventBus.getDefault().post(new ErrorVO());
       }
     });
   }
