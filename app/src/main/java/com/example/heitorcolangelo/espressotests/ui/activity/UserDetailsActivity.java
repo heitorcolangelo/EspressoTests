@@ -1,6 +1,7 @@
 package com.example.heitorcolangelo.espressotests.ui.activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -9,6 +10,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -108,12 +111,14 @@ public class UserDetailsActivity extends BaseActivity {
   }
 
   private void traceRoute() {
+    if(noInfoAvailable(user.location().street(),"address")) return;
     String uri = "google.navigation:q=" + user.location().street();
     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
     startActivity(intent);
   }
 
   private void callUser() {
+    if(noInfoAvailable(user.phone(),"phone")) return;
     String uri = "tel:" + user.phone().trim();
     Intent intent = new Intent(Intent.ACTION_CALL);
     intent.setData(Uri.parse(uri));
@@ -129,10 +134,28 @@ public class UserDetailsActivity extends BaseActivity {
   }
 
   private void sendEmail() {
+    if(noInfoAvailable(user.email(),"email")) return;
     Intent intent = new Intent(Intent.ACTION_SEND);
     intent.setType("text/plain");
     intent.putExtra(Intent.EXTRA_EMAIL, user.email());
     startActivity(intent);
+  }
+
+  private boolean noInfoAvailable(String info, String infoName) {
+    if (TextUtils.isEmpty(info)) {
+      new AlertDialog.Builder(this)
+          .setTitle(R.string.important)
+          .setMessage(getString(R.string.no_info_message, infoName))
+          .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              dialog.dismiss();
+            }
+          })
+          .show();
+      return true;
+    } else
+      return false;
   }
 
   private void setupViewsInfo() {

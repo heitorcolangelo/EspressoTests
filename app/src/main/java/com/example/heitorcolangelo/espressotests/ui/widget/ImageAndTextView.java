@@ -3,6 +3,8 @@ package com.example.heitorcolangelo.espressotests.ui.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,6 +46,10 @@ public class ImageAndTextView extends LinearLayout {
 
   public void setupViews(int image, String text) {
     this.image.setImageResource(image);
+    if(TextUtils.isEmpty(text)) {
+      text = getContext().getString(R.string.user_details_no_info);
+      this.text.setTextColor(ContextCompat.getColor(getContext(),R.color.red));
+    }
     this.text.setText(text);
   }
 }
