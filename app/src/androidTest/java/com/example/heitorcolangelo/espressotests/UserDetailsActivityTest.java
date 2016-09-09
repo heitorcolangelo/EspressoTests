@@ -1,6 +1,10 @@
 package com.example.heitorcolangelo.espressotests;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.content.Intent;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
@@ -8,12 +12,21 @@ import com.example.heitorcolangelo.espressotests.mocks.Mocks;
 import com.example.heitorcolangelo.espressotests.network.UsersApi;
 import com.example.heitorcolangelo.espressotests.network.model.UserVO;
 import com.example.heitorcolangelo.espressotests.ui.activity.UserDetailsActivity;
+import com.example.heitorcolangelo.espressotests.utils.PermissionUtils;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.Intents.intending;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -62,6 +75,19 @@ public class UserDetailsActivityTest {
     ).check(matches(isDisplayed()));
   }
 
+  @Test
+  public void clickOnPhone_shouldStartPhoneIntent() throws IOException {
+    mActivityRule.launchActivity(createIntent(false));
+    deleteCache();
+    Intents.init();
+    intending(hasAction(Intent.ACTION_CALL))
+        .respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, new Intent()));
+    onView(withId(R.id.user_details_phone)).perform(scrollTo(), click());
+    PermissionUtils.allowPermissionsIfNeeded(Manifest.permission.CALL_PHONE);
+    intended(hasAction(Intent.ACTION_CALL));
+    Intents.release();
+  }
+
   private Intent createIntent(boolean missingInfo) {
     return new Intent().putExtra(UserDetailsActivity.CLICKED_USER, getMockedUser(missingInfo));
   }
@@ -69,5 +95,11 @@ public class UserDetailsActivityTest {
   private UserVO getMockedUser(boolean missingInfo) {
     final String mock = missingInfo ? Mocks.USER_MISSING_INFO : Mocks.USER;
     return UsersApi.GSON.fromJson(mock, UserVO.class);
+  }
+
+  private void deleteCache() throws IOException {
+    Process process = Runtime.getRuntime().exec("adb shell pm clear com.example.heitorcolangelo.espressotests");
+    BufferedReader bufferedReader = new BufferedReader(
+        new InputStreamReader(process.getInputStream()));
   }
 }

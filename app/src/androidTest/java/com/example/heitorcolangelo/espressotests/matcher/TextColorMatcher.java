@@ -9,23 +9,26 @@ import org.hamcrest.Matcher;
 
 public class TextColorMatcher {
 
-  private TextColorMatcher(){}
+  private TextColorMatcher() {
+  }
 
-  public static Matcher<View> withTextColor(@ColorInt final int color) {
+  public static Matcher<View> withTextColor(@ColorInt final int expectedColor) {
     return new BoundedMatcher<View, TextView>(TextView.class) {
-      int targetTextColor = 0;
+      int currentColor = 0;
+
       @Override
       public void describeTo(Description description) {
-        description.appendText("hasTextColor: ").appendValue(Integer.toHexString(color));
-        description.appendText(" actualTextColor: ")
-            .appendValue(Integer.toHexString(targetTextColor));
+        description.appendText("expected TextColor: ")
+            .appendValue(Integer.toHexString(expectedColor));
+        description.appendText(" current TextColor: ")
+            .appendValue(Integer.toHexString(currentColor));
       }
 
       @Override
       protected boolean matchesSafely(TextView item) {
-        if(targetTextColor == 0)
-          targetTextColor = item.getCurrentTextColor();
-        return targetTextColor == color;
+        if (currentColor == 0)
+          currentColor = item.getCurrentTextColor();
+        return currentColor == expectedColor;
       }
     };
   }

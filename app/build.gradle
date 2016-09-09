@@ -41,6 +41,7 @@ dependencies {
 
   compile "com.android.support:appcompat-v7:$androidSupportVersion"
   compile "com.android.support:recyclerview-v7:$androidSupportVersion"
+  compile "com.android.support:design:$androidSupportVersion"
 
   // Picasso
   compile "com.squareup.picasso:picasso:$picassoVersion"
@@ -59,6 +60,9 @@ dependencies {
   // Retrofit
   compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
   compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+  // UiAutomator
+  androidTestCompile "com.android.support.test.uiautomator:uiautomator-v18:2.1.2"
 
   // Espresso
   androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"

@@ -5,9 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -28,7 +29,7 @@ public class UserDetailsActivity extends BaseActivity {
 
   private static final String TAG = UserDetailsActivity.class.getSimpleName();
   private static final String USER_KEY = TAG + ".user";
-  private static final int PHONE_PERMISSION = 100;
+  private static final int PHONE_PERMISSION_CODE = 100;
   public static final String CLICKED_USER = TAG + ".clickedUser";
 
   @BindView(R.id.user_details_image) ImageView userImage;
@@ -84,9 +85,13 @@ public class UserDetailsActivity extends BaseActivity {
   @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull
   int[] grantResults) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    if (requestCode == PHONE_PERMISSION)
-      callUser();
+    if (requestCode == PHONE_PERMISSION_CODE) {
+      if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        callUser();
+      } else
+        showSnackBar(R.string.permisssion_not_granted, null);
+    } else
+      super.onRequestPermissionsResult(requestCode, permissions, grantResults);
   }
 
   private void setupViewsClick() {
@@ -111,30 +116,48 @@ public class UserDetailsActivity extends BaseActivity {
   }
 
   private void traceRoute() {
-    if(noInfoAvailable(user.location().street(),"address")) return;
+    if (noInfoAvailable(user.location().street(), "address")) return;
     String uri = "google.navigation:q=" + user.location().street();
     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
     startActivity(intent);
   }
 
   private void callUser() {
-    if(noInfoAvailable(user.phone(),"phone")) return;
-    String uri = "tel:" + user.phone().trim();
-    Intent intent = new Intent(Intent.ACTION_CALL);
-    intent.setData(Uri.parse(uri));
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
-          != PackageManager.PERMISSION_GRANTED) {
-        String[] permission = { Manifest.permission.CALL_PHONE };
-        requestPermissions(permission, PHONE_PERMISSION);
-        return;
-      }
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+        != PackageManager.PERMISSION_GRANTED) {
+      requestPhonePermission();
+    } else {
+      if (noInfoAvailable(user.phone(), "phone")) return;
+      String uri = "tel:" + user.phone().trim();
+      Intent intent = new Intent(Intent.ACTION_CALL);
+      intent.setData(Uri.parse(uri));
+      startActivity(intent);
     }
-    startActivity(intent);
+  }
+
+  private void requestPhonePermission() {
+    if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CALL_PHONE)) {
+      showSnackBar(R.string.phone_permission_message, new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          ActivityCompat
+              .requestPermissions(
+                  UserDetailsActivity.this,
+                  new String[] { Manifest.permission.CALL_PHONE },
+                  PHONE_PERMISSION_CODE);
+        }
+      });
+    } else {
+      ActivityCompat
+          .requestPermissions(
+              UserDetailsActivity.this,
+              new String[] { Manifest.permission.CALL_PHONE },
+              PHONE_PERMISSION_CODE);
+    }
   }
 
   private void sendEmail() {
-    if(noInfoAvailable(user.email(),"email")) return;
+    if (noInfoAvailable(user.email(), "email")) return;
     Intent intent = new Intent(Intent.ACTION_SEND);
     intent.setType("text/plain");
     intent.putExtra(Intent.EXTRA_EMAIL, user.email());
@@ -170,5 +193,14 @@ public class UserDetailsActivity extends BaseActivity {
     Picasso.with(this)
         .load(user.picture().large())
         .into(userImage);
+  }
+
+  private void showSnackBar(@StringRes int message, View.OnClickListener actionClick) {
+    Snackbar snackbar =
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
+    if (actionClick != null) {
+      snackbar.setAction(R.string.ok, actionClick);
+    }
+    snackbar.show();
   }
 }
