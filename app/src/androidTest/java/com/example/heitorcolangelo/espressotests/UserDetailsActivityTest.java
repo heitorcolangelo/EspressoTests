@@ -13,9 +13,7 @@ import com.example.heitorcolangelo.espressotests.network.UsersApi;
 import com.example.heitorcolangelo.espressotests.network.model.UserVO;
 import com.example.heitorcolangelo.espressotests.ui.activity.UserDetailsActivity;
 import com.example.heitorcolangelo.espressotests.utils.PermissionUtils;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -78,7 +76,6 @@ public class UserDetailsActivityTest {
   @Test
   public void clickOnPhone_shouldStartPhoneIntent() throws IOException {
     mActivityRule.launchActivity(createIntent(false));
-    deleteCache();
     Intents.init();
     intending(hasAction(Intent.ACTION_CALL))
         .respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, new Intent()));
@@ -95,11 +92,5 @@ public class UserDetailsActivityTest {
   private UserVO getMockedUser(boolean missingInfo) {
     final String mock = missingInfo ? Mocks.USER_MISSING_INFO : Mocks.USER;
     return UsersApi.GSON.fromJson(mock, UserVO.class);
-  }
-
-  private void deleteCache() throws IOException {
-    Process process = Runtime.getRuntime().exec("adb shell pm clear com.example.heitorcolangelo.espressotests");
-    BufferedReader bufferedReader = new BufferedReader(
-        new InputStreamReader(process.getInputStream()));
   }
 }
