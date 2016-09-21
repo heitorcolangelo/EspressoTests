@@ -4,16 +4,20 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import com.example.heitorcolangelo.espressotests.mocks.Mocks;
 import com.example.heitorcolangelo.espressotests.network.UsersApi;
 import com.example.heitorcolangelo.espressotests.network.model.UserVO;
 import com.example.heitorcolangelo.espressotests.ui.activity.UserDetailsActivity;
 import com.example.heitorcolangelo.espressotests.utils.PermissionUtils;
+import com.linkedin.android.testbutler.TestButler;
 import java.io.IOException;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +34,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.example.heitorcolangelo.espressotests.matcher.TextColorMatcher.withTextColor;
+import static com.googlecode.eyesfree.utils.LogUtils.TAG;
 import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
@@ -71,6 +76,16 @@ public class UserDetailsActivityTest {
         withText("No info available."),
         withTextColor(ContextCompat.getColor(mActivityRule.getActivity(), R.color.red)))
     ).check(matches(isDisplayed()));
+  }
+
+  @Before
+  public void beforeTest(){
+    String packageName = InstrumentationRegistry.getTargetContext().getPackageName();
+    try {
+      TestButler.revokePermission(packageName, Manifest.permission.CALL_PHONE);
+    }catch (Exception e){
+      Log.e(TAG, "beforeTest: ");
+    }
   }
 
   @Test

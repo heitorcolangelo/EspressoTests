@@ -14,7 +14,7 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 
 /**
  * From: https://gist.github.com/rocboronat/65b1187a9fca9eabfebb5121d818a3c4
-  */
+ */
 public class PermissionUtils {
   private static final int PERMISSIONS_DIALOG_DELAY = 3000;
   private static final int GRANT_BUTTON_INDEX = 1;
@@ -22,7 +22,8 @@ public class PermissionUtils {
   public static void allowPermissionsIfNeeded(String permissionNeeded) {
     try {
       Context context = InstrumentationRegistry.getTargetContext();
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !hasNeededPermission(context, permissionNeeded)) {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !hasNeededPermission(context,
+          permissionNeeded)) {
         sleep(PERMISSIONS_DIALOG_DELAY);
         UiDevice device = UiDevice.getInstance(getInstrumentation());
         UiObject allowPermissions = device.findObject(new UiSelector()

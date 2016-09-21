@@ -12,7 +12,8 @@ android {
     versionCode 1
     versionName "1.0"
 
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunner "com.example.heitorcolangelo.espressotests.CustomTestRunner"
     vectorDrawables.useSupportLibrary = true
 
     resConfigs "en"
@@ -38,6 +39,7 @@ final espressoVersion = '2.2.2'
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
+  androidTestCompile project(':test-butler-library-debug')
 
   compile "com.android.support:appcompat-v7:$androidSupportVersion"
   compile "com.android.support:recyclerview-v7:$androidSupportVersion"
@@ -45,14 +47,12 @@ dependencies {
 
   // Picasso
   compile "com.squareup.picasso:picasso:$picassoVersion"
-
   // ButterKnife
   apt "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
   compile "com.jakewharton:butterknife:$butterKnifeVersion"
 
   // EventBus
   compile 'org.greenrobot:eventbus:3.0.0'
-
   // OkHttp
   compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
   compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
@@ -85,4 +85,5 @@ dependencies {
   androidTestCompile "com.android.support:support-annotations:$androidSupportVersion"
 
   testCompile 'junit:junit:4.12'
+
 }
