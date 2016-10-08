@@ -8,16 +8,21 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.heitorcolangelo.espressotests.R;
 import com.example.heitorcolangelo.espressotests.ui.BaseActivity;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 public class LoginActivity extends BaseActivity {
 
   @BindView(R.id.login_button) Button loginButton;
   @BindView(R.id.login_username) EditText username;
   @BindView(R.id.login_password) EditText password;
+  @BindView(R.id.progress_view) LinearLayout loading;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +33,20 @@ public class LoginActivity extends BaseActivity {
     loginButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        showLoading();
         if (validateFields())
           doLogin();
         else
           showErrorDialog();
       }
     });
+  }
+
+  private void showLoading(){
+    username.setVisibility(GONE);
+    password.setVisibility(GONE);
+    loginButton.setVisibility(GONE);
+    loading.setVisibility(VISIBLE);
   }
 
   private boolean validateFields() {
