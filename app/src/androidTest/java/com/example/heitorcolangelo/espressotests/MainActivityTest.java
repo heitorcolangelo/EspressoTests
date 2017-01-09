@@ -24,6 +24,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -127,6 +128,7 @@ public class MainActivityTest {
     final Api api = new Retrofit.Builder()
         .baseUrl(url)
         .addConverterFactory(GsonConverterFactory.create(UsersApi.GSON))
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .client(client)
         .build()
         .create(Api.class);

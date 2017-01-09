@@ -9,14 +9,12 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.example.heitorcolangelo.espressotests.R;
 
 public class ImageAndTextView extends LinearLayout {
 
-  @BindView(R.id.image_and_text_image) ImageView image;
-  @BindView(R.id.image_and_text_text) TextView text;
+  private ImageView image;
+  private TextView text;
 
   public ImageAndTextView(Context context) {
     super(context);
@@ -41,7 +39,8 @@ public class ImageAndTextView extends LinearLayout {
 
   private void init(Context context) {
     inflate(context, R.layout.view_image_and_text, this);
-    ButterKnife.bind(this);
+    image = (ImageView) findViewById(R.id.image_and_text_image);
+    text = (TextView) findViewById(R.id.image_and_text_text);
   }
 
   public void setupViews(int image, String text) {

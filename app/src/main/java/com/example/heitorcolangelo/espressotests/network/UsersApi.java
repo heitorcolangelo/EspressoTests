@@ -1,18 +1,17 @@
 package com.example.heitorcolangelo.espressotests.network;
 
 import com.example.heitorcolangelo.espressotests.BuildConfig;
-import com.example.heitorcolangelo.espressotests.network.model.ErrorVO;
 import com.example.heitorcolangelo.espressotests.network.model.Page;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import org.greenrobot.eventbus.EventBus;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public final class UsersApi {
 
@@ -40,24 +39,10 @@ public final class UsersApi {
   /**
    * Get list of users in page passed as parameter
    */
-  public void getUsers(int page) {
-    Call<Page> userResponsePage = api.getUsers(page, RESULTS);
-    userResponsePage.enqueue(new Callback<Page>() {
-      @Override
-      public void onResponse(Call<Page> call, Response<Page> response) {
-        if (response.isSuccessful())
-          EventBus.getDefault().post(response.body());
-        else {
-          ErrorVO error = GSON.fromJson(response.errorBody().charStream(), ErrorVO.class);
-          EventBus.getDefault().post(error);
-        }
-      }
-
-      @Override
-      public void onFailure(Call<Page> call, Throwable t) {
-        EventBus.getDefault().post(new ErrorVO());
-      }
-    });
+  public Observable<Page> getUsers(int page) {
+    return api.getUsers(page, RESULTS)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread());
   }
 
   private UsersApi() {
@@ -65,10 +50,12 @@ public final class UsersApi {
     interceptor.setLevel(BuildConfig.DEBUG ?
         HttpLoggingInterceptor.Level.BODY :
         HttpLoggingInterceptor.Level.NONE);
-    OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+    OkHttpClient client = new OkHttpClient.Builder()
+        .addInterceptor(interceptor).build();
 
     api = new Retrofit.Builder()
         .baseUrl(BuildConfig.BASE_URL)
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create(GSON))
         .client(client)
         .build()

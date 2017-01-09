@@ -1,46 +1,35 @@
 package com.example.heitorcolangelo.espressotests.ui.activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.example.heitorcolangelo.espressotests.R;
-import com.example.heitorcolangelo.espressotests.adapter.SimpleRecyclerAdapter;
-import com.example.heitorcolangelo.espressotests.adapter.UserListAdapter;
+import com.example.heitorcolangelo.espressotests.adapter.UserAdapter;
+import com.example.heitorcolangelo.espressotests.databinding.ActivityMainBinding;
 import com.example.heitorcolangelo.espressotests.network.UsersApi;
-import com.example.heitorcolangelo.espressotests.network.model.ErrorVO;
 import com.example.heitorcolangelo.espressotests.network.model.Page;
 import com.example.heitorcolangelo.espressotests.network.model.UserVO;
 import com.example.heitorcolangelo.espressotests.ui.BaseActivity;
-import com.example.heitorcolangelo.espressotests.ui.widget.UserItemView;
 import java.util.ArrayList;
 import java.util.List;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends BaseActivity {
-
-  @BindView(R.id.recycler_view) RecyclerView recyclerView;
-  @BindView(R.id.progress_view) LinearLayout progressView;
-  @BindView(R.id.error_view) LinearLayout errorView;
 
   private static final String TAG = MainActivity.class.getSimpleName();
   private static final String USER_LIST = TAG + ".userList";
   private static final String CURRENT_PAGE = TAG + ".currentPage";
   private int currentPage = 0;
-  private UserListAdapter adapter;
+  private UserAdapter adapter;
+  private ActivityMainBinding binding;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    ButterKnife.bind(this);
+    binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
   }
 
   @Override
@@ -48,35 +37,31 @@ public class MainActivity extends BaseActivity {
     super.onResume();
     if (adapter == null) {
       showLoading();
-      UsersApi.getInstance().getUsers(currentPage);
+      UsersApi.getInstance()
+          .getUsers(currentPage)
+          .subscribe(this::onUsersApiResponse, this::showError);
     } else
       setupRecyclerView();
   }
 
-  @Subscribe(threadMode = ThreadMode.MAIN)
   public void onUsersApiResponse(Page usersPage) {
     setupAdapter(usersPage.results());
     currentPage++;
   }
 
   @Override
-  protected boolean handleError(ErrorVO error) {
-    showError();
-    return true;
-  }
-
-  @Override
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
-    if(adapter != null)
-      outState.putParcelableArrayList(USER_LIST, (ArrayList<? extends Parcelable>) adapter.getItemList());
+    if (adapter != null)
+      outState.putParcelableArrayList(USER_LIST,
+          (ArrayList<? extends Parcelable>) adapter.getUserList());
     outState.putInt(CURRENT_PAGE, currentPage);
   }
 
   @Override
   protected void onRestoreInstanceState(Bundle savedInstanceState) {
     super.onRestoreInstanceState(savedInstanceState);
-    if(adapter == null) {
+    if (adapter == null) {
       List<UserVO> userList = savedInstanceState.getParcelableArrayList(USER_LIST);
       setupAdapter(userList);
     }
@@ -90,46 +75,34 @@ public class MainActivity extends BaseActivity {
   }
 
   private void setupRecyclerView() {
-    recyclerView.setHasFixedSize(true);
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    recyclerView.setAdapter(adapter);
+    binding.recyclerView.setHasFixedSize(true);
+    binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    binding.recyclerView.setAdapter(adapter);
   }
 
   private void setupAdapter(List<UserVO> userList) {
     showList();
-    adapter = new UserListAdapter(new UserListAdapter.OnItemClickListener() {
-      @Override
-      public void onItemClick(UserVO item) {
-        startUserDetailsActivity(item);
-      }
-    });
-
-    adapter.setViewCreator(new SimpleRecyclerAdapter.ViewCreator<UserVO, UserItemView>() {
-      @Override
-      public UserItemView createViewInstance(ViewGroup parent, int viewType) {
-        return new UserItemView(parent.getContext());
-      }
-    });
-    adapter.addAll(userList);
+    adapter = new UserAdapter(this::startUserDetailsActivity);
+    adapter.setUserList(userList);
     setupRecyclerView();
     adapter.notifyDataSetChanged();
   }
 
   private void showList() {
-    progressView.setVisibility(View.GONE);
-    errorView.setVisibility(View.GONE);
-    recyclerView.setVisibility(View.VISIBLE);
+    binding.progressView.setVisibility(View.GONE);
+    binding.errorView.setVisibility(View.GONE);
+    binding.recyclerView.setVisibility(View.VISIBLE);
   }
 
   private void showLoading() {
-    recyclerView.setVisibility(View.GONE);
-    errorView.setVisibility(View.GONE);
-    progressView.setVisibility(View.VISIBLE);
+    binding.recyclerView.setVisibility(View.GONE);
+    binding.errorView.setVisibility(View.GONE);
+    binding.progressView.setVisibility(View.VISIBLE);
   }
 
-  private void showError() {
-    recyclerView.setVisibility(View.GONE);
-    progressView.setVisibility(View.GONE);
-    errorView.setVisibility(View.VISIBLE);
+  private void showError(Throwable throwable) {
+    binding.recyclerView.setVisibility(View.GONE);
+    binding.progressView.setVisibility(View.GONE);
+    binding.errorView.setVisibility(View.VISIBLE);
   }
 }

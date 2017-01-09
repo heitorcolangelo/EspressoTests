@@ -1,58 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_margin="3dp"
-              android:animateLayoutChanges="true"
-              android:gravity="center_horizontal"
-              android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/recycler_view"
+  <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:padding="8dp"/>
-
-  <LinearLayout
-      android:id="@+id/progress_view"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_margin="3dp"
+      android:animateLayoutChanges="true"
       android:gravity="center_horizontal"
-      android:orientation="vertical"
-      android:visibility="gone"
-      tools:visibility="visible">
+      android:orientation="vertical">
 
-    <ProgressBar
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp" />
+
+    <LinearLayout
+        android:id="@+id/progress_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@android:style/Widget.DeviceDefault.ProgressBar" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
 
-    <TextView
+      <ProgressBar
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          style="@android:style/Widget.DeviceDefault.ProgressBar" />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/loading" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/error_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/loading" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+      <ImageView
+          android:layout_width="160dp"
+          android:layout_height="160dp"
+          app:srcCompat="@drawable/ic_cancel" />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/request_error"
+          android:textSize="20sp" />
+
+    </LinearLayout>
   </LinearLayout>
-
-  <LinearLayout
-      android:id="@+id/error_view"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:orientation="vertical"
-      android:visibility="gone">
-
-    <ImageView
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        app:srcCompat="@drawable/ic_cancel" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/request_error"
-        android:textSize="20sp"/>
-
-  </LinearLayout>
-</LinearLayout>
+</layout>

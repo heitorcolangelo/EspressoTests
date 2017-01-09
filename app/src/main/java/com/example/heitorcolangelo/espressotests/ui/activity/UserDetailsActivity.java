@@ -1,9 +1,9 @@
 package com.example.heitorcolangelo.espressotests.ui.activity;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,14 +15,10 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.example.heitorcolangelo.espressotests.R;
+import com.example.heitorcolangelo.espressotests.databinding.ActivityUserDetailsBinding;
 import com.example.heitorcolangelo.espressotests.network.model.UserVO;
 import com.example.heitorcolangelo.espressotests.ui.BaseActivity;
-import com.example.heitorcolangelo.espressotests.ui.widget.ImageAndTextView;
 import com.squareup.picasso.Picasso;
 
 public class UserDetailsActivity extends BaseActivity {
@@ -32,18 +28,14 @@ public class UserDetailsActivity extends BaseActivity {
   private static final int PHONE_PERMISSION_CODE = 100;
   public static final String CLICKED_USER = TAG + ".clickedUser";
 
-  @BindView(R.id.user_details_image) ImageView userImage;
-  @BindView(R.id.user_details_name) TextView userName;
-  @BindView(R.id.user_details_address) ImageAndTextView userAddress;
-  @BindView(R.id.user_details_phone) ImageAndTextView userPhone;
-  @BindView(R.id.user_details_email) ImageAndTextView userEmail;
 
   private UserVO user;
+  private ActivityUserDetailsBinding binding;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_user_details);
+    binding = DataBindingUtil.setContentView(this, R.layout.activity_user_details);
 
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) {
@@ -52,7 +44,6 @@ public class UserDetailsActivity extends BaseActivity {
     }
 
     user = getIntent().getParcelableExtra(CLICKED_USER);
-    ButterKnife.bind(this);
     setupViewsInfo();
     setupViewsClick();
   }
@@ -95,24 +86,9 @@ public class UserDetailsActivity extends BaseActivity {
   }
 
   private void setupViewsClick() {
-    userAddress.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        traceRoute();
-      }
-    });
-    userPhone.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        callUser();
-      }
-    });
-    userEmail.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        sendEmail();
-      }
-    });
+    binding.userDetailsAddress.setOnClickListener(v -> traceRoute());
+    binding.userDetailsPhone.setOnClickListener(v -> callUser());
+    binding.userDetailsEmail.setOnClickListener(v -> sendEmail());
   }
 
   private void traceRoute() {
@@ -137,16 +113,11 @@ public class UserDetailsActivity extends BaseActivity {
 
   private void requestPhonePermission() {
     if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CALL_PHONE)) {
-      showSnackBar(R.string.phone_permission_message, new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-          ActivityCompat
-              .requestPermissions(
-                  UserDetailsActivity.this,
-                  new String[] { Manifest.permission.CALL_PHONE },
-                  PHONE_PERMISSION_CODE);
-        }
-      });
+      showSnackBar(R.string.phone_permission_message, view -> ActivityCompat
+          .requestPermissions(
+              UserDetailsActivity.this,
+              new String[] { Manifest.permission.CALL_PHONE },
+              PHONE_PERMISSION_CODE));
     } else {
       ActivityCompat
           .requestPermissions(
@@ -169,12 +140,7 @@ public class UserDetailsActivity extends BaseActivity {
       new AlertDialog.Builder(this)
           .setTitle(R.string.important)
           .setMessage(getString(R.string.no_info_message, infoName))
-          .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-              dialog.dismiss();
-            }
-          })
+          .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
           .show();
       return true;
     } else
@@ -185,14 +151,14 @@ public class UserDetailsActivity extends BaseActivity {
     if (user == null)
       return;
 
-    userName.setText(user.fullName());
-    userAddress.setupViews(R.drawable.ic_location, user.location().street());
-    userPhone.setupViews(R.drawable.ic_phone, user.phone());
-    userEmail.setupViews(R.drawable.ic_mail, user.email());
+    binding.userDetailsName.setText(user.fullName());
+    binding.userDetailsAddress.setupViews(R.drawable.ic_location, user.location().street());
+    binding.userDetailsPhone.setupViews(R.drawable.ic_phone, user.phone());
+    binding.userDetailsEmail.setupViews(R.drawable.ic_mail, user.email());
 
     Picasso.with(this)
         .load(user.picture().large())
-        .into(userImage);
+        .into(binding.userDetailsImage);
   }
 
   private void showSnackBar(@StringRes int message, View.OnClickListener actionClick) {
