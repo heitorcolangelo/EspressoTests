@@ -5,6 +5,130 @@ public interface Mocks {
       + "  error: \"Uh oh, something has gone wrong. Please tweet us @randomapi about the issue. Thank you.\"\n"
       + "}";
 
+  String USER = "{\n" +
+      "      \"gender\": \"male\",\n" +
+      "      \"name\": {\n" +
+      "        \"title\": \"mr\",\n" +
+      "        \"first\": \"eddie\",\n" +
+      "        \"last\": \"dunn\"\n" +
+      "      },\n" +
+      "      \"location\": {\n" +
+      "        \"street\": \"9446 pockrus page rd\",\n" +
+      "        \"city\": \"albuquerque\",\n" +
+      "        \"state\": \"montana\",\n" +
+      "        \"postcode\": 86561\n" +
+      "      },\n" +
+      "      \"email\": \"eddie.dunn@example.com\",\n" +
+      "      \"login\": {\n" +
+      "        \"username\": \"bigswan393\",\n" +
+      "        \"password\": \"dixie\",\n" +
+      "        \"salt\": \"VD19IE6Y\",\n" +
+      "        \"md5\": \"e5a75d6e3166b9383f9b2a34e65fdab3\",\n" +
+      "        \"sha1\": \"22b9c778beb48a4d025e1e0d4a62fcc479f4fc7b\",\n" +
+      "        \"sha256\": \"e2ef025932e9ae98a112b38d8c87613114695ef84cfbd39b23e8d7a32c3a09e3\"\n" +
+      "      },\n" +
+      "      \"registered\": 1393145692,\n" +
+      "      \"dob\": 479990817,\n" +
+      "      \"phone\": \"(961)-878-5210\",\n" +
+      "      \"cell\": \"(777)-513-0612\",\n" +
+      "      \"id\": {\n" +
+      "        \"name\": \"SSN\",\n" +
+      "        \"value\": \"056-75-3220\"\n" +
+      "      },\n" +
+      "      \"picture\": {\n" +
+      "        \"large\": \"https://randomuser.me/api/portraits/men/62.jpg\",\n" +
+      "        \"medium\": \"https://randomuser.me/api/portraits/med/men/62.jpg\",\n" +
+      "        \"thumbnail\": \"https://randomuser.me/api/portraits/thumb/men/62.jpg\"\n" +
+      "      },\n" +
+      "      \"nat\": \"US\"\n" +
+      "    }\n";
+
+  String USER_MISSING_INFO = "{\n" +
+      "      \"gender\": \"male\",\n" +
+      "      \"name\": {\n" +
+      "        \"title\": \"mr\",\n" +
+      "        \"first\": \"eddie\",\n" +
+      "        \"last\": \"dunn\"\n" +
+      "      },\n" +
+      "      \"location\": {\n" +
+      "        \"street\": \"9446 pockrus page rd\",\n" +
+      "        \"city\": \"albuquerque\",\n" +
+      "        \"state\": \"montana\",\n" +
+      "        \"postcode\": 86561\n" +
+      "      },\n" +
+      "      \"email\": \"\",\n" +
+      "      \"login\": {\n" +
+      "        \"username\": \"bigswan393\",\n" +
+      "        \"password\": \"dixie\",\n" +
+      "        \"salt\": \"VD19IE6Y\",\n" +
+      "        \"md5\": \"e5a75d6e3166b9383f9b2a34e65fdab3\",\n" +
+      "        \"sha1\": \"22b9c778beb48a4d025e1e0d4a62fcc479f4fc7b\",\n" +
+      "        \"sha256\": \"e2ef025932e9ae98a112b38d8c87613114695ef84cfbd39b23e8d7a32c3a09e3\"\n" +
+      "      },\n" +
+      "      \"registered\": 1393145692,\n" +
+      "      \"dob\": 479990817,\n" +
+      "      \"phone\": \"(961)-878-5210\",\n" +
+      "      \"cell\": \"(777)-513-0612\",\n" +
+      "      \"id\": {\n" +
+      "        \"name\": \"SSN\",\n" +
+      "        \"value\": \"056-75-3220\"\n" +
+      "      },\n" +
+      "      \"picture\": {\n" +
+      "        \"large\": \"https://randomuser.me/api/portraits/men/62.jpg\",\n" +
+      "        \"medium\": \"https://randomuser.me/api/portraits/med/men/62.jpg\",\n" +
+      "        \"thumbnail\": \"https://randomuser.me/api/portraits/thumb/men/62.jpg\"\n" +
+      "      },\n" +
+      "      \"nat\": \"US\"\n" +
+      "    }\n";
+
+  String SUCCESS_SINGLE_ITEM = "{\n" +
+      "  \"results\": [\n" +
+      "    {\n" +
+      "      \"gender\": \"male\",\n" +
+      "      \"name\": {\n" +
+      "        \"title\": \"mr\",\n" +
+      "        \"first\": \"eddie\",\n" +
+      "        \"last\": \"dunn\"\n" +
+      "      },\n" +
+      "      \"location\": {\n" +
+      "        \"street\": \"9446 pockrus page rd\",\n" +
+      "        \"city\": \"albuquerque\",\n" +
+      "        \"state\": \"montana\",\n" +
+      "        \"postcode\": 86561\n" +
+      "      },\n" +
+      "      \"email\": \"eddie.dunn@example.com\",\n" +
+      "      \"login\": {\n" +
+      "        \"username\": \"bigswan393\",\n" +
+      "        \"password\": \"dixie\",\n" +
+      "        \"salt\": \"VD19IE6Y\",\n" +
+      "        \"md5\": \"e5a75d6e3166b9383f9b2a34e65fdab3\",\n" +
+      "        \"sha1\": \"22b9c778beb48a4d025e1e0d4a62fcc479f4fc7b\",\n" +
+      "        \"sha256\": \"e2ef025932e9ae98a112b38d8c87613114695ef84cfbd39b23e8d7a32c3a09e3\"\n" +
+      "      },\n" +
+      "      \"registered\": 1393145692,\n" +
+      "      \"dob\": 479990817,\n" +
+      "      \"phone\": \"(961)-878-5210\",\n" +
+      "      \"cell\": \"(777)-513-0612\",\n" +
+      "      \"id\": {\n" +
+      "        \"name\": \"SSN\",\n" +
+      "        \"value\": \"056-75-3220\"\n" +
+      "      },\n" +
+      "      \"picture\": {\n" +
+      "        \"large\": \"https://randomuser.me/api/portraits/men/62.jpg\",\n" +
+      "        \"medium\": \"https://randomuser.me/api/portraits/med/men/62.jpg\",\n" +
+      "        \"thumbnail\": \"https://randomuser.me/api/portraits/thumb/men/62.jpg\"\n" +
+      "      },\n" +
+      "      \"nat\": \"US\"\n" +
+      "    }\n" +
+      "  ],\n" +
+      "  \"info\": {\n" +
+      "    \"seed\": \"e3667682db8b6223\",\n" +
+      "    \"results\": 20,\n" +
+      "    \"page\": 1,\n" +
+      "    \"version\": \"1.0\"\n" +
+      "  }\n" +
+      "}";
+
   String SUCCESS = "{\n" +
       "  \"results\": [\n" +
       "    {\n" +

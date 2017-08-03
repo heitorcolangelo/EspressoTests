@@ -22,4 +22,9 @@
   <string name="validation_message">Fields cannot be empty</string>
   <string name="ok">Ok</string>
   <string name="request_error">There was a error on last request =(</string>
+  <string name="user_details_no_info">No info available.</string>
+  <string name="no_info_message">This user doesn\'t have %s</string>
+  <string name="no_thanks">No, thanks.</string>
+  <string name="phone_permission_message">We need your permission to perform this action.</string>
+  <string name="permisssion_not_granted">Permission denied.</string>
 </resources>
