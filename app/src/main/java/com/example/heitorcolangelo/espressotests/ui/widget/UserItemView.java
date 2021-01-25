@@ -7,12 +7,14 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.example.heitorcolangelo.espressotests.R;
 import com.example.heitorcolangelo.espressotests.adapter.holder.ViewBinder;
 import com.example.heitorcolangelo.espressotests.network.model.UserVO;
 import com.squareup.picasso.Picasso;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class UserItemView extends RelativeLayout implements ViewBinder<UserVO> {
 
@@ -49,7 +51,7 @@ public class UserItemView extends RelativeLayout implements ViewBinder<UserVO> {
   public void bind(UserVO payload) {
     userName.setText(payload.fullName());
 
-    Picasso.with(getContext())
+    Picasso.get()
         .load(payload.picture().medium())
         .into(userImage);
   }

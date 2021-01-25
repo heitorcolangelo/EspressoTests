@@ -1,9 +1,12 @@
 package com.example.heitorcolangelo.espressotests.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.heitorcolangelo.espressotests.network.model.ErrorVO;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

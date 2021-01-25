@@ -5,9 +5,12 @@ import com.example.heitorcolangelo.espressotests.network.model.ErrorVO;
 import com.example.heitorcolangelo.espressotests.network.model.Page;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.greenrobot.eventbus.EventBus;
+import org.jetbrains.annotations.NotNull;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import org.greenrobot.eventbus.EventBus;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,7 +24,7 @@ public final class UsersApi {
       .create();
   private static final int RESULTS = 20;
 
-  private Api api;
+  private final Api api;
 
   private static UsersApi INSTANCE;
 
@@ -44,17 +47,20 @@ public final class UsersApi {
     Call<Page> userResponsePage = api.getUsers(page, RESULTS);
     userResponsePage.enqueue(new Callback<Page>() {
       @Override
-      public void onResponse(Call<Page> call, Response<Page> response) {
+      public void onResponse(@NotNull Call<Page> call, @NotNull Response<Page> response) {
         if (response.isSuccessful())
           EventBus.getDefault().post(response.body());
         else {
-          ErrorVO error = GSON.fromJson(response.errorBody().charStream(), ErrorVO.class);
+          ErrorVO error = null;
+          if (response.errorBody() != null) {
+            error = GSON.fromJson(response.errorBody().charStream(), ErrorVO.class);
+          }
           EventBus.getDefault().post(error);
         }
       }
 
       @Override
-      public void onFailure(Call<Page> call, Throwable t) {
+      public void onFailure(@NotNull Call<Page> call, @NotNull Throwable t) {
         EventBus.getDefault().post(new ErrorVO());
       }
     });

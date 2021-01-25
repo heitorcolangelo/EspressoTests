@@ -1,10 +1,15 @@
 package com.example.heitorcolangelo.espressotests.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.heitorcolangelo.espressotests.adapter.holder.BasicViewHolder;
 import com.example.heitorcolangelo.espressotests.adapter.holder.ViewBinder;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,15 +22,16 @@ import java.util.List;
  * @param <V> The View that implements {@link ViewBinder}
  */
 public class SimpleRecyclerAdapter<T, V extends View & ViewBinder<T>>
-    extends RecyclerView.Adapter<BasicViewHolder> {
+    extends RecyclerView.Adapter<BasicViewHolder<T,V>> {
 
   // the data itens holder
   protected final List<T> itemList = new ArrayList<>();
   // Used to create views in the base viewholder
   protected ViewCreator<T, V> viewCreator;
 
+  @NotNull
   @Override
-  public BasicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  public BasicViewHolder<T,V> onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
     return new BasicViewHolder<>(viewCreator.createViewInstance(parent, viewType));
   }
 

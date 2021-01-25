@@ -2,13 +2,14 @@ package com.example.heitorcolangelo.espressotests.network.type;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 
 public class Picture implements Parcelable {
 
-  @Expose private String large;
-  @Expose private String medium;
-  @Expose private String thumbnail;
+  @Expose private final String large;
+  @Expose private final String medium;
+  @Expose private final String thumbnail;
 
   public String thumbnail() {
     return thumbnail;

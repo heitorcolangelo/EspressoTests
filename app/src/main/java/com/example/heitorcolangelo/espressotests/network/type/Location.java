@@ -2,15 +2,16 @@ package com.example.heitorcolangelo.espressotests.network.type;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 
 public class Location implements Parcelable {
-  @Expose private String street;
+  @Expose private Street street;
   @Expose private String city;
   @Expose private String state;
   @Expose private String postcode;
 
-  public String street() {
+  public Street street() {
     return street;
   }
 
@@ -33,7 +34,7 @@ public class Location implements Parcelable {
 
   @Override
   public void writeToParcel(Parcel dest, int flags) {
-    dest.writeString(this.street);
+    dest.writeParcelable(this.street, flags);
     dest.writeString(this.city);
     dest.writeString(this.state);
     dest.writeString(this.postcode);
@@ -43,7 +44,7 @@ public class Location implements Parcelable {
   }
 
   protected Location(Parcel in) {
-    this.street = in.readString();
+    this.street = in.readParcelable(Street.class.getClassLoader());
     this.city = in.readString();
     this.state = in.readString();
     this.postcode = in.readString();

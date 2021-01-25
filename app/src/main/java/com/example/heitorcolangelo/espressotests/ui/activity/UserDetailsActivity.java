@@ -6,20 +6,25 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.core.app.ActivityCompat;
+
 import com.example.heitorcolangelo.espressotests.R;
 import com.example.heitorcolangelo.espressotests.network.model.UserVO;
 import com.example.heitorcolangelo.espressotests.ui.BaseActivity;
 import com.example.heitorcolangelo.espressotests.ui.widget.ImageAndTextView;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class UserDetailsActivity extends BaseActivity {
 
@@ -67,7 +72,7 @@ public class UserDetailsActivity extends BaseActivity {
   }
 
   @Override
-  protected void onSaveInstanceState(Bundle outState) {
+  protected void onSaveInstanceState(@NotNull Bundle outState) {
     super.onSaveInstanceState(outState);
     outState.putParcelable(USER_KEY, user);
   }
@@ -140,11 +145,11 @@ public class UserDetailsActivity extends BaseActivity {
       return;
 
     userName.setText(user.fullName());
-    userAddress.setupViews(R.drawable.ic_location, user.location().street());
+    userAddress.setupViews(R.drawable.ic_location, user.location().street().numberAndName());
     userPhone.setupViews(R.drawable.ic_phone, user.phone());
     userEmail.setupViews(R.drawable.ic_mail, user.email());
 
-    Picasso.with(this)
+    Picasso.get()
         .load(user.picture().large())
         .into(userImage);
   }

@@ -3,13 +3,13 @@ package com.example.heitorcolangelo.espressotests.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.heitorcolangelo.espressotests.R;
 import com.example.heitorcolangelo.espressotests.adapter.SimpleRecyclerAdapter;
 import com.example.heitorcolangelo.espressotests.adapter.UserListAdapter;
@@ -19,14 +19,21 @@ import com.example.heitorcolangelo.espressotests.network.model.Page;
 import com.example.heitorcolangelo.espressotests.network.model.UserVO;
 import com.example.heitorcolangelo.espressotests.ui.BaseActivity;
 import com.example.heitorcolangelo.espressotests.ui.widget.UserItemView;
-import java.util.ArrayList;
-import java.util.List;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
 
-  @BindView(R.id.recycler_view) RecyclerView recyclerView;
+  @BindView(R.id.recycler_view)
+  RecyclerView recyclerView;
   @BindView(R.id.progress_view) LinearLayout progressView;
   @BindView(R.id.error_view) LinearLayout errorView;
 
@@ -66,7 +73,7 @@ public class MainActivity extends BaseActivity {
   }
 
   @Override
-  protected void onSaveInstanceState(Bundle outState) {
+  protected void onSaveInstanceState(@NotNull Bundle outState) {
     super.onSaveInstanceState(outState);
     if(adapter != null)
       outState.putParcelableArrayList(USER_LIST, (ArrayList<? extends Parcelable>) adapter.getItemList());

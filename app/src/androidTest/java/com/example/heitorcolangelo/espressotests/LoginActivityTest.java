@@ -3,35 +3,38 @@ package com.example.heitorcolangelo.espressotests;
 import android.app.Activity;
 import android.app.Instrumentation.ActivityResult;
 import android.content.Intent;
-import android.support.test.espresso.intent.Intents;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.espresso.intent.Intents;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import com.example.heitorcolangelo.espressotests.ui.activity.LoginActivity;
 import com.example.heitorcolangelo.espressotests.ui.activity.MainActivity;
+
 import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.Intents.intending;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.Intents.intending;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class LoginActivityTest {
 
   private static final int BOTH_FIELDS_ID = -1;
   @Rule
-  public ActivityTestRule<LoginActivity>
-      mActivityRule = new ActivityTestRule<>(LoginActivity.class, false, true);
+  public ActivityScenarioRule<LoginActivity>
+      mActivityRule = new ActivityScenarioRule<>(LoginActivity.class);
 
   @Test
   public void whenActivityIsLaunched_shouldDisplayInitialState() {
@@ -74,8 +77,9 @@ public class LoginActivityTest {
 
 
   private void testEmptyFieldState(int notEmptyFieldId) {
-    if (notEmptyFieldId != BOTH_FIELDS_ID)
+    if (notEmptyFieldId != BOTH_FIELDS_ID) {
       onView(withId(notEmptyFieldId)).perform(typeText("defaultText"), closeSoftKeyboard());
+    }
 
     onView(withId(R.id.login_button)).perform(click());
     onView(withText(R.string.validation_message)).check(matches(isDisplayed()));
